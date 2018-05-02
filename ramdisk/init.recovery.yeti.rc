@@ -3,7 +3,7 @@
 ##############################################################
 # Source: device/intel/mixins/groups/boot-arch/efi/init.recovery.rc
 ##############################################################
-service watchdogd /sbin/watchdogd
+service watchdogd /sbin/watchdogd 10 30
     user root
     class core
     oneshot
@@ -11,6 +11,8 @@ service watchdogd /sbin/watchdogd
 
 on boot
     start watchdogd
+    write /proc/sys/kernel/hung_task_timeout_secs 0
+
 ##############################################################
 # Source: device/intel/mixins/groups/ethernet/dhcp/init.recovery.rc
 ##############################################################
@@ -18,9 +20,7 @@ service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL eth0
     class main
     disabled
     oneshot
-
-on post-fs
-    start dhcpcd_eth0
+    seclabel u:r:dhcp:s0
 
 ##############################################################
 # Source: device/intel/mixins/groups/usb-gadget/g_android/init.recovery.rc
@@ -61,11 +61,28 @@ service thermal_lite /thermal_lite
 
 on post-fs-data
     start thermal_lite ROS
+    start dhcpcd_eth0
+
+on init
+    setprop sys.powerctl.criticalshutdown 0
+
+on property:sys.powerctl.criticalshutdown=1
+    write /sys/class/misc/pmic/vbus_det_type edge
+
 ##############################################################
-# Source: device/intel/mixins/groups/lights/true/init.recovery.rc
+# Source: device/intel/mixins/groups/debugfs/default/init.recovery.rc
 ##############################################################
-on boot
-    # Set backlight to 50, default value is 1
-    write /sys/class/backlight/intel_backlight/brightness 50
+on early-init
+    # Mount debugfs and make it writable so that debuggerd can
+    # create stack traces, required with newer kernels
+    mount debugfs debugfs /sys/kernel/debug
+    chmod 0755 /sys/kernel/debug
+
+on early-boot
+    # Needed by surfaceflinger to enable it to open trace_marker
+    # on start without file permissions error.
+    chmod 0222 /sys/kernel/debug/tracing/trace_marker
+    # tracefs is mounted after 1st access to it
+    chmod 0755 /sys/kernel/debug/tracing
 
 # ------------------ END MIX-IN DEFINITIONS ------------------
