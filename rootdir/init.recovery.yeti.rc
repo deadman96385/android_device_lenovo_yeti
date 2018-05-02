@@ -1,0 +1,41 @@
+import /init.recovery.hlthchrg.rc
+
+on post-fs
+    start dhcpcd_eth0
+
+on init
+    # Android creates by-name disk links with the disk controller
+    # in the generated path, so that the names pulled out of the GPT
+    # can be associated with the correct disk. Create a shortcut to
+    # /dev/block/by-name so that we can use the same fstabs everywhere.
+    mkdir /dev/block 0755 root root
+    symlink /dev/block/platform/pci0000:00/80860F14:00/by-name /dev/block/by-name
+
+    export EXTERNAL_STORAGE /external_sd
+    mkdir /country
+    symlink /system/etc /etc
+    mkdir /sdcard
+
+on post-fs-data
+    start thermal_lite ROS
+
+on boot
+    start watchdogd
+
+    # Set backlight to 50, default value is 1
+    write /sys/class/backlight/intel_backlight/brightness 50
+
+service watchdogd /sbin/watchdogd 300 700
+    user root
+    class core
+    oneshot
+    seclabel u:r:watchdogd:s0
+
+service thermal_lite /sbin/thermal_lite
+    oneshot
+    seclabel u:r:thermal_lite:s0
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL eth0
+    class main
+    disabled
+    oneshot
