@@ -46,13 +46,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     pstore-clean
 
-# Compatibility
-PRODUCT_PACKAGES += \
-    libshim_audio \
-    libshim_camera \
-    libshim_sensors \
-    libstlport
-
 # Lights
 PRODUCT_PACKAGES += \
     lights.gmin
