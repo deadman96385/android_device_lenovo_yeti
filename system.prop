@@ -13,16 +13,7 @@ ro.ycbcr.pixel_format=0x10F
 drm.service.enabled=true
 
 # Display
-ro.sf.lcd_density=320
+ro.sf.lcd_density=280
 
-# Scheduler
-sys.io.scheduler=bfq
-
-#BT
-ro.btconfig.if=uart
-ro.btconfig.dev=/dev/ttyHSU0
-ro.btconfig.vendor=broadcom
-ro.btconfig.chip=BCM4356
-
-#Wi-Fi
-ro.wlan.mimo=1
+# Wifi only
+ro.radio.noril=1

@@ -15,23 +15,34 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/xiaomi/latte
+DEVICE_PATH := device/lenovo/yetiwifi
 
 # Platform
 TARGET_NO_BOOTLOADER := true
 
 TARGET_BOARD_PLATFORM := gmin
 TARGET_BOARD_PLATFORM_GPU := intel_gen8
-TARGET_BOOTLOADER_BOARD_NAME := latte
+TARGET_BOOTLOADER_BOARD_NAME := yeti
 
-TARGET_ARCH := x86
-TARGET_ARCH_VARIANT := silvermont
-TARGET_CPU_ABI := x86
-TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
+TARGET_ARCH := x86_64
 TARGET_CPU_ABI_LIST_32_BIT := x86,armeabi-v7a,armeabi
+TARGET_CPU_ABI_LIST_64_BIT := x86_64,arm64-v8a
+TARGET_CPU_ABI := x86_64
+TARGET_CPU_ABI_LIST := x86_64,x86,armeabi-v7a,armeabi,arm64-v8a
+TARGET_ARCH_VARIANT := silvermont
+
+TARGET_2ND_CPU_ABI := x86
+TARGET_2ND_ARCH := x86
+TARGET_2ND_ARCH_VARIANT := silvermont
 
 # Kernel
-BOARD_KERNEL_CMDLINE := loglevel=7 androidboot.hardware=latte firmware_class.path=/system/etc/firmware i915.fastboot=1 vga=current i915.modeset=1 drm.vblankoffdelay=1 bootboost=1 pm_suspend_debug=1 pstore.backend=ramoops thermal.off=1 androidboot.selinux=permissive 
+BOARD_KERNEL_IMAGE_NAME := bzImage
+TARGET_KERNEL_ARCH := x86_64
+TARGET_KERNEL_SOURCE := kernel/lenovo/yeti
+TARGET_KERNEL_CONFIG := lineageos_yetiwifi_defconfig
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
+BOARD_KERNEL_CMDLINE := loglevel=2 androidboot.hardware=yeti firmware_class.path=/system/etc/firmware bootboost=1 pm_suspend_debug=1 memmap=4M$0x5c400000 intel_pstate=disable vga=current i915.modeset=1 drm.vblankoffdelay=1 i915.fastboot=1 thermal.off=1 pstore.backend=ramoops intel_pstore_pram.record_size=0x8000
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # PowerHAL
 INTEL_POWER_HAL_INTERACTIVE_GOV := true
@@ -71,6 +82,7 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 0x01E00000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x01E00000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2684354560
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 27783069696
 BOARD_FLASH_BLOCK_SIZE := 512
 
 #OTA
@@ -98,29 +110,18 @@ WIFI_DRIVER_FW_PATH_AP := "/vendor/firmware/brcm/fw_bcmdhd_4356a2_pcie_apsta.bin
 WIFI_DRIVER_FW_PATH_P2P := "/vendor/firmware/brcm/fw_bcmdhd_4356a2_pcie.bin"
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := latte
-
-# Partition sizes
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 27783069696
+TARGET_OTA_ASSERT_DEVICE := yetiwifi
 
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
-#Root in lineageOS
+# Root in lineageOS
 WITH_SU := true
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
-    device/xiaomi/latte/sepolicy \
-    device/xiaomi/latte/sepolicy/dollar_cove \
-    device/xiaomi/latte/sepolicy/intel_prop \
-    device/xiaomi/latte/sepolicy/sensorhub \
-    device/xiaomi/latte/sepolicy/telephony
-
-# Kernel
-BOARD_KERNEL_IMAGE_NAME := bzImage
-TARGET_KERNEL_ARCH := x86_64
-TARGET_KERNEL_SOURCE := kernel/xiaomi/latte
-TARGET_KERNEL_CONFIG := lineageos_latte_defconfig
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
-
+    device/lenovo/yetiwifi/sepolicy \
+    device/lenovo/yetiwifi/sepolicy/dollar_cove \
+    device/lenovo/yetiwifi/sepolicy/intel_prop \
+    device/lenovo/yetiwifi/sepolicy/sensorhub \
+    device/lenovo/yetiwifi/sepolicy/telephony

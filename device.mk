@@ -15,10 +15,10 @@
 # limitations under the License.
 #
 
-DEVICE_PACKAGE_OVERLAYS += device/xiaomi/latte/overlay
+DEVICE_PACKAGE_OVERLAYS += device/lenovo/yetiwifi/overlay
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-$(call inherit-product, vendor/xiaomi/latte/latte-vendor.mk)
+$(call inherit-product, vendor/lenovo/yetiwifi/yetiwifi-vendor.mk)
 
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_CHARACTERISTICS := tablet
@@ -76,7 +76,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # FRP
 ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.frp.pst=/dev/block/by-name/android_persistent
+    ro.frp.pst=/dev/block/by-name/android_frp
 
 # Color conversion
 PRODUCT_PACKAGES += \
@@ -100,7 +100,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Modules location
 ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.modules.location=/system/lib/modules
+    ro.boot.moduleslocation=/system/lib/modules
 
 # Dirac
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -108,7 +108,6 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Intel props
 ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.sf.lcd_density=320 \
     persist.intel.ogl.username=Developer \
     persist.intel.ogl.debug=/data/ufo.prop \
     persist.intel.ogl.dumpdebugvars=1 \
@@ -117,7 +116,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,device/xiaomi/latte/ramdisk,root)
+    $(call find-copy-subdir-files,*,device/lenovo/yetiwifi/ramdisk,root)
 
 # Media codecs
 PRODUCT_COPY_FILES += \
@@ -135,7 +134,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
