@@ -17,6 +17,8 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
+#define BTM_DEF_LOCAL_NAME   "Lenovo Yoga Book"
+
 #define PRELOAD_MAX_RETRY_ATTEMPTS 1
 
 #define PRELOAD_START_TIMEOUT_MS 3000
