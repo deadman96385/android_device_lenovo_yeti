@@ -5,7 +5,7 @@ Android 6.x Device configuration for Lenovo Yoga Book
 
 Basic   | Spec Sheet
 -------:|:-------------------------
-CPU     | Quad Core Intel Atom X5-Z8500 (Cherry-Trail)
+CPU     | Quad Core Intel Atom X5-Z8550 (Cherry-Trail)
 CLOCK	| 1.44GHz w/ boost up to 2.24GHz
 GPU     | Intel Gen8 HD Graphics up to 600MHz
 Memory  | 4 GB
